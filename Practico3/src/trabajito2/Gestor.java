@@ -6,8 +6,9 @@ public class Gestor {
 
 	public static void main(String[] args) {
 
-		Casa casa1 = new Casa(null, null, 0, 0, 0);
-		Apartamento apartamento1 = new Apartamento(null, null, 0, 0, 0);
+		Casa arregloCasa[] = new Casa[10];
+		Apartamento arregloApart[] = new Apartamento[10];
+
 		Scanner sc = new Scanner(System.in);
 
 		int opcion = 0;
@@ -18,8 +19,12 @@ public class Gestor {
 			System.out.println("--MENU--");
 			System.out.println("1- Ingrese una instancia");
 			System.out.println("2- Mostrar instancia");
-			System.out.println("3- Salir");
+			System.out.println("3- Eliminar una casa");
+			System.out.println("4- Eliminar un apartamento");
+			System.out.println("5- Modificar instancias");
+			System.out.println("6- Salir...");
 			opcion = sc.nextInt();
+			sc.nextLine();
 
 			switch (opcion) {
 
@@ -39,12 +44,12 @@ public class Gestor {
 					System.out.println("Ingese los metros cuadrados");
 					Double mtroCuadrados = sc.nextDouble();
 					System.out.println("Ingrese nro de pisos");
-					sc.nextLine();
 					int nroPisos = sc.nextInt();
+					sc.nextLine();
 					System.out.println("Ingrese codigo postal");
 					int codigoPost = sc.nextInt();
 					sc.nextLine();
-					altaCasa(casa1, nombreCasa, nombreDireccionC, mtroCuadrados, nroPisos, codigoPost);
+					altaCasa(arregloCasa, nombreCasa, nombreDireccionC, mtroCuadrados, nroPisos, codigoPost);
 
 				} else if (opcion1 == 2) {
 					sc.nextLine();
@@ -62,62 +67,233 @@ public class Gestor {
 					System.out.println("Ingrese el nro de Baños");
 					int nroBanios = sc.nextInt();
 					sc.nextLine();
-					altaApartamento(apartamento1, nombreApart, nombreDireccionA, nroApart, nroHabitaciones, nroBanios);
+					altaApartamento(arregloApart, nombreApart, nombreDireccionA, nroApart, nroHabitaciones, nroBanios);
 				}
 				break;
 
 			case 2:
-				listado(casa1, apartamento1);
+				listado(arregloCasa);
+				listado(arregloApart);
+				break;
+
+			case 3:
+				System.out.println("Borre una casa con su nombre");
+				String borrarCasa = sc.nextLine();
+				bajaCasa(borrarCasa, arregloCasa);
+				System.out.println("Instancia eliminada");
+				break;
+
+			case 4:
+				System.out.println("Borre un apartamento con su nombre");
+				String borrarApart = sc.nextLine();
+				bajaApart(borrarApart, arregloApart);
+				System.out.println("Instancia eliminada");
+				break;
+
+			case 5:
+				System.out.println("Cual instancia desea modificar?");
+				System.out.println("1 - Casa");
+				System.out.println("2 - Apartamento");
+				int opcion2 = sc.nextInt();
+				sc.nextLine();
+				if (opcion2 == 1) {
+					System.out.println("Ingrese el nombre de la casa");
+					String IDInstan1 = sc.nextLine();
+					modifCasa(arregloCasa, IDInstan1);
+				} else if (opcion2 == 2) {
+					System.out.println("Ingrese el nombre del apartamento");
+					String IDInstan2 = sc.nextLine();
+					modifApart(arregloApart, IDInstan2);
+				}
+				break;
+
+			case 6:
+				System.out.println("Saliendo...");
 				break;
 
 			}
 
-		} while (opcion != 3);
+		} while (opcion != 6);
 		System.out.println("Saliendo...");
 	}
 
-	public static void altaCasa(Casa c, String nombre, String direccion, double metrosCuadrados, int numeroPisos,
+	public static void altaCasa(Casa[] c, String nombre, String direccion, double metrosCuadrados, int numeroPisos,
 			int codigoPostal) {
 
-		c.setNombre(nombre);
-		c.setDireccion(direccion);
-		c.setMetrosCuadrados(metrosCuadrados);
-		c.setNumeroPisos(numeroPisos);
-		c.setCodigoPostal(codigoPostal);
+		for (int i = 0; i < c.length; i++) {
+
+			if (c[i] == null) {
+				c[i] = new Casa(nombre, direccion, metrosCuadrados, numeroPisos, codigoPostal);
+				System.out.println("Casa ingresada correctamente");
+				break;
+
+			}
+		}
 	}
 
-	public static void altaApartamento(Apartamento a, String nombre, String direccion, int nroApartamentos,
+	public static void altaApartamento(Apartamento[] a, String nombre, String direccion, int nroApartamento,
 			int nroHabitaciones, int nroBanios) {
 
-		a.setNombre(nombre);
-		a.setDireccion(direccion);
-		a.setNroApartamento(nroApartamentos);
-		a.setNroHabitaciones(nroHabitaciones);
-		a.setNroBanios(nroBanios);
+		for (int i = 0; i < a.length; i++) {
+
+			if (a[i] == null) {
+				a[i] = new Apartamento(nombre, direccion, nroApartamento, nroHabitaciones, nroBanios);
+				System.out.println("Apartamento ingresado correctamente");
+				break;
+			}
+		}
 	}
 
-	public static void listado(Casa c, Apartamento a) {
-		if (c.getNombre() != null) {
-			System.out.println("Listado de casas");
-			System.out.println("Nombre: " + c.getNombre());
-			System.out.println("Direccion: " + c.getDireccion());
-			System.out.println("Metros cuadrados: " + c.getMetrosCuadrados());
-			System.out.println("Nro de pisos: " + c.getNumeroPisos());
-			System.out.println("Codigo postal: " + c.getCodigoPostal());
-		} else {
-			System.out.println("No se han ingresado casas");
-		}
-		if (a.getNombre() != null) {
-			System.out.println("Listado de Apartamentos");
-			System.out.println("Nombre: " + a.getNombre());
-			System.out.println("Direccion: " + a.getDireccion());
-			System.out.println("Numero apartamentos: " + a.getNroApartamento());
-			System.out.println("Numero habitaciones: " + a.getNroHabitaciones());
-			System.out.println("Numero baños: " + a.getNroBanios());
-		} else {
-			System.out.println("No se ingresaron apartamentos");
+	public static void listado(Casa[] c) {
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] != null) {
+				System.out.println("LISTADO DE CASAS");
+				System.out.println("=Casa " + i + "=");
+				System.out.println("Nombre: " + c[i].getNombre());
+				System.out.println("Direccion: " + c[i].getDireccion());
+				System.out.println("Metros cuadrados: " + c[i].getMetrosCuadrados());
+				System.out.println("Nro de pisos: " + c[i].getNumeroPisos());
+				System.out.println("Codigo postal: " + c[i].getCodigoPostal());
+
+			}
 		}
 
 	}
 
+	public static void listado(Apartamento[] a) {
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != null) {
+				System.out.println("LISTADO DE APARTAMENTOS");
+				System.out.println("=Apartamento " + i + "=");
+				System.out.println("Nombre: " + a[i].getNombre());
+				System.out.println("Direccion: " + a[i].getDireccion());
+				System.out.println("Nro apartamento: " + a[i].getNroApartamento());
+				System.out.println("Nro habitaciones: " + a[i].getNroHabitaciones());
+				System.out.println("Nro banios: " + a[i].getNroBanios());
+
+			}
+		}
+	}
+
+	public static void bajaCasa(String borrarCasa, Casa[] c) {
+
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] != null && c[i].getNombre().equalsIgnoreCase(borrarCasa)) {
+				c[i] = null;
+				System.out.println("Casa eliminada");
+				break;
+			}
+		}
+	}
+
+	public static void bajaApart(String borrarApart, Apartamento[] a) {
+
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != null && a[i].getNombre().equalsIgnoreCase(borrarApart)) {
+				a[i] = null;
+				System.out.println("Apartamento eliminado correctamente");
+				break;
+			}
+		}
+	}
+
+	public static void modifCasa(Casa[] c, String IDInstan1) {
+		Scanner sc = new Scanner(System.in);
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] != null && c[i].getNombre().equals(IDInstan1)) {
+				int o = 0;
+				System.out.println("Seleccione el atributo que desee modificar: ");
+				System.out.println("1- Nombre");
+				System.out.println("2- Direccion ");
+				System.out.println("3- Metros cuadrados ");
+				System.out.println("4- Nro de pisos ");
+				System.out.println("5- Codigo postal ");
+				o = sc.nextInt();
+				sc.nextLine();
+				if (o == 1) {
+					System.out.println("Ingrese un nuevo nombre");
+					String nombre = sc.nextLine();
+					c[i].setNombre(nombre);
+					System.out.println("Nombre modificado...");
+					break;
+				} else if (o == 2) {
+					System.out.println("Ingrese una nueva direccion");
+					String direccion = sc.nextLine();
+					c[i].setDireccion(direccion);
+					System.out.println("Direccion modificada...");
+					break;
+				} else if (o == 3) {
+					System.out.println("Ingrese nuevos metros cuadrados ");
+					double metrosCuadrados = sc.nextDouble();
+					sc.nextLine();
+					c[i].setMetrosCuadrados(metrosCuadrados);
+					System.out.println("Metros cuadrados modificados...");
+					break;
+				} else if (o == 4) {
+					System.out.println("Ingrese el nuevo nro de pisos");
+					int nroPisos = sc.nextInt();
+					c[i].setNumeroPisos(nroPisos);
+					System.out.println("Nro de pisos modificados...");
+					break;
+				} else if (o == 5) {
+					System.out.println("Ingrese el nuevo codigo postal");
+					int codigoPostal = sc.nextInt();
+					sc.nextLine();
+					c[i].setCodigoPostal(codigoPostal);
+					System.out.println("Codigo postal modificiado...");
+					break;
+				}
+			}
+		}
+	}
+
+	public static void modifApart(Apartamento[] a, String IDInstan2) {
+		Scanner sc = new Scanner(System.in);
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != null && a[i].getNombre().equals(IDInstan2)) {
+				int o = 0;
+				System.out.println("Seleccione el atributo que desee modificar: ");
+				System.out.println("1- Nombre");
+				System.out.println("2- Direccion ");
+				System.out.println("3- Nro apartamento ");
+				System.out.println("4- Nro habitaciones ");
+				System.out.println("5- Nro banios ");
+				o = sc.nextInt();
+				sc.nextLine();
+				if (o == 1) {
+					System.out.println("Ingrese un nuevo nombre");
+					String nombre = sc.nextLine();
+					a[i].setNombre(nombre);
+					System.out.println("Nombre modificado...");
+					break;
+				} else if (o == 2) {
+					System.out.println("Ingrese una nueva direccion");
+					String direccion = sc.nextLine();
+					a[i].setDireccion(direccion);
+					System.out.println("Direccion modificada...");
+					break;
+				} else if (o == 3) {
+					System.out.println("Ingrese nuevo nro de apartamento ");
+					int nroApartamento = sc.nextInt();
+					sc.nextLine();
+					a[i].setNroApartamento(nroApartamento);
+					System.out.println("Nro de apartamento modificado...");
+					break;
+				} else if (o == 4) {
+					System.out.println("Ingrese el nuevo nro de habitaciones");
+					int nroHabitaciones = sc.nextInt();
+					a[i].setNroHabitaciones(nroHabitaciones);
+					System.out.println("Nro de habitaciones modificados...");
+					break;
+				} else if (o == 5) {
+					System.out.println("Ingrese el nuevo nro de baños");
+					int nroBanios = sc.nextInt();
+					sc.nextLine();
+					a[i].setNroBanios(nroBanios);
+					System.out.println("Nro de banios modificiado...");
+					break;
+				}
+			}
+		}
+	}
 }

@@ -23,7 +23,7 @@ public class Casa extends Edificio{
 	public void setCodigoPostal(int codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
-	public Casa(String nombre, String direccion, int metrosCuadrados, int numeroPisos, int codigoPostal) {
+	public Casa(String nombre, String direccion, double metrosCuadrados, int numeroPisos, int codigoPostal) {
 		super(nombre, direccion);
 		this.metrosCuadrados = metrosCuadrados;
 		this.numeroPisos = numeroPisos;
