@@ -19,47 +19,45 @@ public class Gestor {
 			System.out.println("2- Dormir al Dino/Perro");
 			System.out.println("3- Salir");
 			opcion = sc.nextInt();
-			
+
 			switch (opcion) {
-			
+
 			case 1:
-			int alimentar;
-			System.out.println("Qué animal quiere alimentar?");
-			System.out.println("1- Dino");
-			System.out.println("2- Perro");
-			alimentar = sc.nextInt();
-			
-			if(alimentar==1 ) {
-				perro1.comer();
-	
-			} 
-			if(alimentar==2) {
-				dinosaurio1.comer();
-			
-				break;
-			}
-			
+				int alimentar;
+				System.out.println("Qué animal quiere alimentar?");
+				System.out.println("1- Perro");
+				System.out.println("2- Dino");
+				alimentar = sc.nextInt();
+
+				if (alimentar == 1) {
+					perro1.comer();
+
+				}
+				if (alimentar == 2) {
+					dinosaurio1.comer();
+
+					break;
+				}
+
 			case 2:
-			int dormir;
-			System.out.println("Qué animal va a dormir");
-			System.out.println("1- Dino");
-			System.out.println("2- Perro");
-			dormir = sc.nextInt();
-			
-			if(dormir==1) {
-				perro1.dormir();
-				
+				int dormir;
+				System.out.println("Qué animal va a dormir");
+				System.out.println("1- Perro");
+				System.out.println("2- Dino");
+				dormir = sc.nextInt();
+
+				if (dormir == 1) {
+					perro1.dormir();
+
+				}
+				if (dormir == 2) {
+					dinosaurio1.dormir();
+
+					break;
+				}
 			}
-			if (dormir==2) {
-				dinosaurio1.dormir();
-				
-				break;
-			}
-			}
-			
-			
-			
-		}while (opcion != 3);
- System.out.println("Saliendo...");
-		}	
+
+		} while (opcion != 3);
+		System.out.println("Saliendo...");
+	}
 }
